@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thai Mueang — sea &amp; sky, live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1F26;
+    --teal-deep:#123B3F;
+    --teal:#1D5C63;
+    --teal-soft:#2E7075;
+    --sand:#EFE6D0;
+    --sand-dim:#E3D8BC;
+    --rust:#A8542E;
+    --foam:#F7F4EC;
+    --line:#D9CDA9;
+    --ok:#3E7A56;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--sand);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.4;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:28px 20px 60px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:linear-gradient(160deg, var(--teal-deep), var(--teal) 85%);
+    color:var(--foam);
+    border-radius:18px;
+    padding:28px 26px 22px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .place-en{font-size:22px;font-weight:600;letter-spacing:0.2px;}
+  .place-th{font-family:'Fraunces', serif;font-style:italic;font-size:15px;color:#C9E4D8;margin-top:2px;}
+  .clock{
+    text-align:right;
+    font-size:13px;
+    color:#BEDAD2;
+  }
+  .clock b{display:block;font-size:20px;color:var(--foam);font-weight:500;font-variant-numeric:tabular-nums;}
+
+  .hero-main{
+    display:flex;
+    align-items:baseline;
+    gap:18px;
+    margin-top:22px;
+    flex-wrap:wrap;
+  }
+  .temp-now{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:76px;
+    line-height:1;
+  }
+  .temp-now sup{font-size:32px;font-weight:400;top:-0.9em;}
+  .cond-block{font-size:16px;color:#DCEFE7;}
+  .cond-block .cond-main{font-size:18px;color:var(--foam);margin-bottom:2px;}
+
+  .hero-stats{
+    display:flex;
+    gap:26px;
+    margin-top:20px;
+    flex-wrap:wrap;
+    font-size:13px;
+    color:#CDE6DC;
+  }
+  .hero-stats b{display:block;color:var(--foam);font-size:16px;font-weight:500;margin-top:2px;font-variant-numeric:tabular-nums;}
+
+  .wave-divider{
+    display:block;
+    width:100%;
+    height:16px;
+    margin-top:22px;
+  }
+
+  /* ---------- Grid cards ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));
+    gap:14px;
+    margin-top:16px;
+  }
+
+  .card{
+    background:var(--foam);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px 18px 16px;
+  }
+  .card h3{
+    margin:0 0 4px;
+    font-size:13px;
+    font-weight:600;
+    color:var(--teal-deep);
+  }
+  .card .sub{font-size:12px;color:#7A7256;margin-bottom:12px;}
+
+  /* Tide */
+  .tide-svg{width:100%;height:70px;display:block;}
+  .tide-list{list-style:none;margin:10px 0 0;padding:0;font-size:13px;}
+  .tide-list li{display:flex;justify-content:space-between;padding:5px 0;border-top:1px solid var(--line);}
+  .tide-list li:first-child{border-top:none;}
+  .tide-tag{font-weight:500;}
+  .tide-tag.high{color:var(--teal-deep);}
+  .tide-tag.low{color:var(--rust);}
+  .tide-list .tide-mid{color:#8A8163;font-variant-numeric:tabular-nums;}
+
+  /* Moon */
+  .moon-row{display:flex;align-items:center;gap:16px;}
+  .moon-wrap{
+    width:58px;height:58px;border-radius:50%;
+    position:relative;overflow:hidden;
+    background:var(--foam);
+    border:1px solid var(--line);
+    flex:none;
+  }
+  .moon-wrap .lit,.moon-wrap .dark{
+    position:absolute;top:0;left:0;width:100%;height:100%;border-radius:50%;
+  }
+  .moon-wrap .lit{background:#EAD9A0;}
+  .moon-wrap .dark{background:var(--ink);}
+  .moon-name{font-size:15px;font-weight:500;color:var(--ink);}
+  .moon-illum{font-size:12px;color:#7A7256;margin-top:2px;font-variant-numeric:tabular-nums;}
+
+  /* Sea */
+  .sea-figure{display:flex;align-items:baseline;gap:6px;}
+  .sea-temp-num{font-family:'Fraunces', serif;font-size:38px;font-weight:500;color:var(--teal-deep);}
+  .sea-sub{font-size:13px;color:#7A7256;margin-top:8px;}
+  .sea-sub b{color:var(--ink);font-weight:500;}
+
+  /* Forecast strip */
+  .strip{
+    margin-top:14px;
+    background:var(--foam);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 18px;
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+  }
+  .day{
+    flex:1 0 90px;
+    text-align:center;
+    padding:6px 4px;
+    border-right:1px solid var(--line);
+  }
+  .day:last-child{border-right:none;}
+  .day .dname{font-size:12px;color:#7A7256;margin-bottom:6px;}
+  .day svg{width:28px;height:28px;}
+  .day .drange{font-size:13px;margin-top:6px;font-variant-numeric:tabular-nums;}
+  .day .drange .hi{font-weight:600;color:var(--ink);}
+  .day .drange .lo{color:#8A8163;}
+  .day .drain{font-size:11px;color:var(--teal-soft);margin-top:3px;}
+
+  /* Footer */
+  .foot{
+    margin-top:20px;
+    font-size:12px;
+    color:#8A8163;
+    border-top:1px solid var(--line);
+    padding-top:14px;
+  }
+  .foot a{color:var(--teal-deep);}
+  .advisory{
+    margin-top:8px;
+    font-size:12px;
+    color:var(--rust);
+  }
+  .loading, .err{
+    padding:40px 10px;
+    text-align:center;
+    color:#7A7256;
+    font-size:14px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="place-en">Thai Mueang</div>
+        <div class="place-th">ท้ายเหมือง · Andaman coast, Phang Nga</div>
+      </div>
+      <div class="clock">
+        local time
+        <b id="clockTime">--:--</b>
+      </div>
+    </div>
+
+    <div class="hero-main">
+      <div class="temp-now" id="heroTemp">–<sup>°C</sup></div>
+      <div class="cond-block">
+        <div class="cond-main" id="heroCond">Loading conditions…</div>
+        <div id="heroFeels"></div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div>Wind<b id="statWind">–</b></div>
+      <div>Direction<b id="statWindDir">–</b></div>
+      <div>Humidity<b id="statHumidity">–</b></div>
+      <div>Pressure<b id="statPressure">–</b></div>
+      <div>Sunrise<b id="statSunrise">–</b></div>
+      <div>Sunset<b id="statSunset">–</b></div>
+    </div>
+
+    <svg class="wave-divider" viewBox="0 0 400 16" preserveAspectRatio="none">
+      <path d="M0 8 Q 25 0, 50 8 T 100 8 T 150 8 T 200 8 T 250 8 T 300 8 T 350 8 T 400 8"
+        fill="none" stroke="#BEDAD2" stroke-width="1.4" opacity="0.55"/>
+    </svg>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Tide</h3>
+      <div class="sub">modelled sea level, not for navigation</div>
+      <svg class="tide-svg" id="tideSvg" viewBox="0 0 300 70" preserveAspectRatio="none"></svg>
+      <ul class="tide-list" id="tideList"><li>Loading…</li></ul>
+    </div>
+
+    <div class="card">
+      <h3>Moon</h3>
+      <div class="sub" id="moonAge">–</div>
+      <div class="moon-row">
+        <div class="moon-wrap"><div class="lit"></div><div class="dark" id="moonDark"></div></div>
+        <div>
+          <div class="moon-name" id="moonName">–</div>
+          <div class="moon-illum" id="moonIllum">–</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Sea temperature</h3>
+      <div class="sub">at the surface, offshore Thai Mueang</div>
+      <div class="sea-figure">
+        <div class="sea-temp-num" id="seaTemp">–</div><div>°C</div>
+      </div>
+      <div class="sea-sub" id="seaWave">Swell: –</div>
+    </div>
+
+    <div class="card">
+      <h3>Rainfall</h3>
+      <div class="sub">Thai Mueang</div>
+      <div class="sea-figure">
+        <div class="sea-temp-num" id="rainToday">–</div><div>mm today</div>
+      </div>
+      <div class="sea-sub" id="rainYesterday">Last 24h: –</div>
+    </div>
+  </div>
+
+  <div class="strip" id="forecastStrip">
+    <div class="loading">Loading forecast…</div>
+  </div>
+
+  <div class="foot">
+    Weather &amp; sea data from <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>.
+    Moon phase calculated locally. Tide is a modelled sea-level estimate (~8&nbsp;km resolution), not a tide-station reading.
+    <div class="advisory">Advisory only — for anything safety-related (boating, swimming, the bar), check official Thai Marine Department and local forecasts before you go.</div>
+    <div id="updatedAt" style="margin-top:6px;"></div>
+  </div>
+
+</div>
+
+<script>
+const LAT = 8.40, LON = 98.22, TZ = "Asia/Bangkok";
+
+const WMO = {
+  0:  ["Clear sky", iconSun],
+  1:  ["Mostly clear", iconSun],
+  2:  ["Partly cloudy", iconCloudSun],
+  3:  ["Overcast", iconCloud],
+  45: ["Fog", iconFog], 48: ["Fog", iconFog],
+  51: ["Light drizzle", iconRain], 53: ["Drizzle", iconRain], 55: ["Heavy drizzle", iconRain],
+  61: ["Light rain", iconRain], 63: ["Rain", iconRain], 65: ["Heavy rain", iconRain],
+  80: ["Rain showers", iconRain], 81: ["Rain showers", iconRain], 82: ["Heavy showers", iconRain],
+  95: ["Thunderstorm", iconStorm], 96: ["Thunderstorm", iconStorm], 99: ["Thunderstorm", iconStorm]
+};
+
+function iconSun(){return `<svg viewBox="0 0 24 24" fill="none" stroke="#A8542E" stroke-width="1.6"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.6M12 19.4V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.6M19.4 12H22M4.2 19.8L6 18M18 6l1.8-1.8" stroke-linecap="round"/></svg>`}
+function iconCloudSun(){return `<svg viewBox="0 0 24 24" fill="none" stroke="#1D5C63" stroke-width="1.6"><circle cx="8.5" cy="8.5" r="3" stroke="#A8542E"/><path d="M8.5 2.8v1.6M13.6 8.5h1.6M3 13.5" stroke="#A8542E" stroke-linecap="round"/><path d="M7 20h10.5a3.5 3.5 0 0 0 .4-6.98A5 5 0 0 0 8.3 12.2 3.8 3.8 0 0 0 7 20Z"/></svg>`}
+function iconCloud(){return `<svg viewBox="0 0 24 24" fill="none" stroke="#1D5C63" stroke-width="1.6"><path d="M6 19h11a3.6 3.6 0 0 0 .4-7.18A5.2 5.2 0 0 0 7.4 11 4 4 0 0 0 6 19Z"/></svg>`}
+function iconFog(){return `<svg viewBox="0 0 24 24" fill="none" stroke="#7A7256" stroke-width="1.6" stroke-linecap="round"><path d="M4 9h13M4 13h16M4 17h11"/></svg>`}
+function iconRain(){return `<svg viewBox="0 0 24 24" fill="none" stroke="#1D5C63" stroke-width="1.6"><path d="M6 14h11a3.6 3.6 0 0 0 .4-7.18A5.2 5.2 0 0 0 7.4 6 4 4 0 0 0 6 14Z"/><path d="M8 18l-1 2.4M12 18l-1 2.4M16 18l-1 2.4" stroke-linecap="round"/></svg>`}
+function iconStorm(){return `<svg viewBox="0 0 24 24" fill="none" stroke="#A8542E" stroke-width="1.6"><path d="M6 12h11a3.6 3.6 0 0 0 .4-7.18A5.2 5.2 0 0 0 7.4 4 4 4 0 0 0 6 12Z" stroke="#1D5C63"/><path d="M12.5 13l-3 5h3l-2 4" stroke-linecap="round" stroke-linejoin="round"/></svg>`}
+
+function fmtTime(iso){
+  return new Date(iso).toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit', timeZone:TZ});
+}
+function fmtDay(iso){
+  return new Date(iso).toLocaleDateString('en-GB', {weekday:'short', timeZone:TZ});
+}
+
+function startClock(){
+  function tick(){
+    document.getElementById('clockTime').textContent =
+      new Date().toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit', second:'2-digit', timeZone:TZ});
+  }
+  tick(); setInterval(tick, 1000);
+}
+
+function renderMoon(){
+  const synodic = 29.53058867;
+  const knownNewMoon = Date.UTC(2000,0,6,18,14,0);
+  const now = Date.now();
+  let age = ((now - knownNewMoon)/86400000) % synodic;
+  if (age < 0) age += synodic;
+  const k = (1 - Math.cos(2*Math.PI*age/synodic)) / 2;
+  const waxing = age < synodic/2;
+
+  let name;
+  if (age < 1.85) name = "New moon";
+  else if (age < 5.54) name = "Waxing crescent";
+  else if (age < 9.23) name = "First quarter";
+  else if (age < 12.92) name = "Waxing gibbous";
+  else if (age < 16.61) name = "Full moon";
+  else if (age < 20.30) name = "Waning gibbous";
+  else if (age < 23.99) name = "Last quarter";
+  else if (age < 27.68) name = "Waning crescent";
+  else name = "New moon";
+
+  const pct = Math.round(k*100);
+  const shift = k * 100 * (waxing ? -1 : 1);
+  document.getElementById('moonDark').style.transform = `translateX(${shift}%)`;
+  document.getElementById('moonName').textContent = name;
+  document.getElementById('moonIllum').textContent = pct + "% illuminated";
+  document.getElementById('moonAge').textContent = `day ${age.toFixed(1)} of the lunar cycle`;
+}
+
+function drawTide(times, heights){
+  const svg = document.getElementById('tideSvg');
+  const list = document.getElementById('tideList');
+  if (!heights.length){ list.innerHTML = "<li>No tide data</li>"; return; }
+
+  const w = 300, h = 70, pad = 6;
+  const min = Math.min(...heights), max = Math.max(...heights);
+  const range = (max - min) || 1;
+  const stepX = (w - pad*2) / (heights.length - 1);
+  const pts = heights.map((v,i) => {
+    const x = pad + i*stepX;
+    const y = h - pad - ((v - min)/range) * (h - pad*2);
+    return [x,y];
+  });
+
+  const path = "M " + pts.map(p => p.join(",")).join(" L ");
+  const nowIdx = Math.min(Math.round(heights.length/48*  (new Date().getHours())), heights.length-1);
+
+  let svgHtml = `<path d="${path}" fill="none" stroke="#1D5C63" stroke-width="2"/>`;
+  if (pts[nowIdx]) {
+    svgHtml += `<circle cx="${pts[nowIdx][0]}" cy="${pts[nowIdx][1]}" r="3.2" fill="#A8542E"/>`;
+  }
+  svg.innerHTML = svgHtml;
+
+  // find local extrema for next ~36h
+  const extrema = [];
+  for (let i=1; i<heights.length-1 && i<36; i++){
+    const a=heights[i-1], b=heights[i], c=heights[i+1];
+    if (b>a && b>c) extrema.push({type:'high', t:times[i], h:b});
+    if (b<a && b<c) extrema.push({type:'low', t:times[i], h:b});
+  }
+  if (!extrema.length){
+    list.innerHTML = "<li>Tide is flat over this window</li>";
+  } else {
+    list.innerHTML = extrema.slice(0,4).map(e =>
+      `<li><span class="tide-tag ${e.type}">${e.type === 'high' ? 'High' : 'Low'}</span><span class="tide-mid">${e.h.toFixed(2)} m</span><span>${fmtTime(e.t)}</span></li>`
+    ).join("");
+  }
+}
+
+function degToCompass(deg){
+  const dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+  return dirs[Math.round(deg/22.5) % 16];
+}
+
+async function load(){
+  try {
+    const wxUrl = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}` +
+      `&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,wind_direction_10m,pressure_msl` +
+      `&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum` +
+      `&timezone=${encodeURIComponent(TZ)}&past_days=1&forecast_days=7`;
+
+    const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${LAT}&longitude=${LON}` +
+      `&hourly=wave_height,sea_surface_temperature,sea_level_height_msl` +
+      `&timezone=${encodeURIComponent(TZ)}&forecast_days=2`;
+
+    const [wxRes, marRes] = await Promise.all([fetch(wxUrl), fetch(marineUrl)]);
+    const wx = await wxRes.json();
+    const mar = await marRes.json();
+
+    // Hero
+    const cur = wx.current;
+    const [condLabel, condIcon] = WMO[cur.weather_code] || ["Conditions unknown", iconCloud];
+    document.getElementById('heroTemp').innerHTML = Math.round(cur.temperature_2m) + '<sup>°C</sup>';
+    document.getElementById('heroCond').textContent = condLabel;
+    document.getElementById('heroFeels').textContent = `feels like ${Math.round(cur.apparent_temperature)}°C`;
+    document.getElementById('statWind').textContent = Math.round(cur.wind_speed_10m) + ' km/h';
+    document.getElementById('statWindDir').textContent = degToCompass(cur.wind_direction_10m) + ' (' + Math.round(cur.wind_direction_10m) + '°)';
+    document.getElementById('statHumidity').textContent = Math.round(cur.relative_humidity_2m) + '%';
+    document.getElementById('statPressure').textContent = Math.round(cur.pressure_msl) + ' hPa';
+    // daily arrays include yesterday at index 0 (past_days=1), so "today" is index 1
+    document.getElementById('statSunrise').textContent = fmtTime(wx.daily.sunrise[1]);
+    document.getElementById('statSunset').textContent = fmtTime(wx.daily.sunset[1]);
+
+    // Rainfall
+    const rainYesterday = wx.daily.precipitation_sum[0];
+    const rainToday = wx.daily.precipitation_sum[1];
+    document.getElementById('rainToday').textContent = rainToday != null ? rainToday.toFixed(1) : '–';
+    document.getElementById('rainYesterday').textContent =
+      'Last 24h: ' + (rainYesterday != null ? rainYesterday.toFixed(1) + ' mm' : '–');
+
+    // Forecast strip: today + next 6 days (skip index 0, which is yesterday)
+    const strip = document.getElementById('forecastStrip');
+    strip.innerHTML = wx.daily.time.slice(1).map((d,idx) => {
+      const i = idx + 1;
+      const [lbl, icon] = WMO[wx.daily.weather_code[i]] || ["–", iconCloud];
+      const rain = wx.daily.precipitation_sum[i];
+      return `<div class="day">
+        <div class="dname">${idx===0 ? 'Today' : fmtDay(d)}</div>
+        ${icon()}
+        <div class="drange"><span class="hi">${Math.round(wx.daily.temperature_2m_max[i])}°</span> <span class="lo">${Math.round(wx.daily.temperature_2m_min[i])}°</span></div>
+        <div class="drain">${rain != null ? rain.toFixed(1) + ' mm' : ''}</div>
+      </div>`;
+    }).join("");
+
+    // Sea temp + wave
+    const seaTemps = mar.hourly.sea_surface_temperature || [];
+    const waves = mar.hourly.wave_height || [];
+    const nowHourIdx = new Date().getHours();
+    const seaNow = seaTemps[nowHourIdx] ?? seaTemps[0];
+    const waveNow = waves[nowHourIdx] ?? waves[0];
+    document.getElementById('seaTemp').textContent = seaNow != null ? seaNow.toFixed(1) : '–';
+    document.getElementById('seaWave').innerHTML = waveNow != null
+      ? `Swell: <b>${waveNow.toFixed(1)} m</b>`
+      : 'Swell data unavailable';
+
+    // Tide (modelled sea level)
+    const levels = mar.hourly.sea_level_height_msl || [];
+    const times = mar.hourly.time || [];
+    if (levels.length) drawTide(times, levels);
+    else document.getElementById('tideList').innerHTML = "<li>Tide model unavailable for this spot</li>";
+
+    document.getElementById('updatedAt').textContent =
+      'Updated ' + new Date().toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit', timeZone:TZ}) + ' local time';
+
+  } catch (err) {
+    document.getElementById('heroCond').textContent = "Couldn't load live data";
+    document.getElementById('forecastStrip').innerHTML = '<div class="err">Forecast unavailable right now — check your connection and reload.</div>';
+    console.error(err);
+  }
+}
+
+startClock();
+renderMoon();
+load();
+setInterval(load, 15 * 60 * 1000); // refresh every 15 min
+</script>
+</body>
+</html>
